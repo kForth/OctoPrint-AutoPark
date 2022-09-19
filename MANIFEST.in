@@ -1,0 +1,4 @@
+include README.md
+recursive-include octoprint_autopark/templates *
+recursive-include octoprint_autopark/translations *
+recursive-include octoprint_autopark/static *

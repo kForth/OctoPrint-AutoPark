@@ -1,0 +1,13 @@
+[black]
+line-length = 90
+include = '''
+(
+    (
+        octoprint_autopark
+      | tests
+      | .github
+    ).*\.pyi?$
+)|(
+    setup\.py
+)
+'''

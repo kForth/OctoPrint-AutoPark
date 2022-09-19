@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build less",
+      "type": "shell",
+      "command": "lessc --clean-css octoprint_autopark/static/less/autopark.less octoprint_autopark/static/css/autopark.css",
+      "problemMatcher": ["$lessc"]
+    }
+  ]
+}

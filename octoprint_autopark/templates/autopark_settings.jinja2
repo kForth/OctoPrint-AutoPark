@@ -1,0 +1,131 @@
+<h3>{{ _('AutoPark Options') }}</h3>
+
+<form class="form-horizontal" onsubmit="return false;">
+
+    <div class="control-group">
+        <label class="checkbox">
+            <input type="checkbox" data-bind="checked: parkAfterPause">
+            {{ _('Park After Pause') }}
+        </label>
+
+        <label class="checkbox">
+            <input type="checkbox" data-bind="checked: parkAfterDone">
+            {{ _('Park After Print Done') }}
+        </label>
+
+        <label class="checkbox">
+            <input type="checkbox" data-bind="checked: parkAfterFail">
+            {{ _('Park After Print Failed') }}
+        </label>
+
+        <label class="checkbox">
+            <input type="checkbox" data-bind="checked: homeBeforeUnpark">
+            {{ _("Home before Unparking") }}
+        </label>
+    </div>
+
+    <div class="control-group">
+        <legend>Parking</legend>
+
+        <div class="control-group">
+            <label class="control-label">{{ _('Park Location') }}:</label>
+            <div class="controls">
+                <select id="parkOnPause-park-location" data-bind="value: parkLocation">
+                    <option value="center">Center of Bed</option>
+                    <option value="min">Min X / Min Y</option>
+                    <option value="min_max">Min X / Max Y</option>
+                    <option value="max_min">Max X / Min Y</option>
+                    <option value="max">Max X / Max Y</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group" data-bind="visible: parkLocation() == 'custom'">
+            <label class="control-label">{{ _('X Position') }}:</label>
+            <div class="controls">
+                <div class="input-append">
+                    <input type="number" step="0.1" data-bind="value: parkPosX">
+                    <span class="add-on">mm</span>
+                </div>
+            </div>
+        </div>
+        <div class="control-group" data-bind="visible: parkLocation() == 'custom'">
+            <label class="control-label">{{ _('Y Position') }}:</label>
+            <div class="controls">
+                <div class="input-append">
+                    <input type="number" step="0.1" data-bind="value: parkPosY">
+                    <span class="add-on">mm</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">{{ _('Z Lift Height') }}:</label>
+            <div class="controls">
+                <div class="input-append">
+                    <input type="number" step="0.1" data-bind="value: parkLiftZ">
+                    <span class="add-on">mm</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">{{ _('Park Speed') }}:</label>
+            <div class="controls">
+                <select id="parkOnPause-park-speed" data-bind="value: parkSpeed">
+                    <option value="auto">From Printer Profile</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group" data-bind="visible: parkSpeed() == 'custom'">
+            <label class="control-label">{{ _('X/Y-Axis Feedrate') }}:</label>
+            <div class="controls">
+                <div class="input-append">
+                    <input type="number" step="5" min="5" data-bind="value: parkSpeedXY">
+                    <select class="add-on" data-bind="value: parkSpeedXY_unit, options: units.speed, optionsText: 'text', optionsValue: 'value', optionsAfterRender: _bindTitle"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group" data-bind="visible: parkSpeed() == 'custom'">
+            <label class="control-label">{{ _('Z-Axis Feedrate') }}:</label>
+            <div class="controls">
+                <div class="input-append">
+                    <input type="number" step="5" min="5" data-bind="value: parkSpeedZ">
+                    <select class="add-on" data-bind="value: parkSpeedZ_unit, options: units.speed, optionsText: 'text', optionsValue: 'value', optionsAfterRender: _bindTitle"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <legend>Printer Profiles</legend>
+
+        <fieldset class="control-group">
+            <label class="radio">
+                <input type="radio" value="all" name="autopark-profileMode" data-bind="checked: profileMode">
+                {{ _('Enable For All Printer Profiles') }}
+            </label>
+            <label class="radio">
+                <input type="radio" value="select" name="autopark-profileMode" data-bind="checked: profileMode">
+                {{ _('Enable For Selected Profiles Only') }}
+            </label>
+        </fieldset>
+
+        <label class="control-group">
+            {{ _('Selected Profiles') }}:
+            <br>
+            <select class="span9" multiple="true" data-bind="
+                options: printerProfiles.profiles.items,
+                optionsValue: 'id',
+                optionsText: 'name',
+                selectedOptions: selectedProfiles,
+                event: { },
+                enable: profileMode() != 'all'">
+            </select>
+        </label>
+    </div>
+</form>
